@@ -64,13 +64,6 @@ class _TodoListWidget extends StatelessWidget {
                     icon: Icons.delete,
                     label: 'Delete',
                   ),
-                  SlidableAction(
-                    onPressed: (context) {},
-                    backgroundColor: const Color(0xFF21B7CA),
-                    foregroundColor: Colors.white,
-                    icon: Icons.share,
-                    label: 'Share',
-                  ),
                 ],
               ),
               child: ListTile(
