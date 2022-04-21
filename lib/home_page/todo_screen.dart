@@ -19,7 +19,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Список задач'),
+        title:
+            const Text('Список задач', style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
       body: TodoProvider(model: model, child: const _TodoListWidget()),

@@ -14,7 +14,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Добавление задачи'),
+        title: const Text('Добавление задачи',
+            style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
       body: AddTodoProvider(model: _model, child: const _AddTodoForm()),
@@ -47,7 +48,8 @@ class _AddTodoForm extends StatelessWidget {
               onPressed: () {
                 model?.save(context);
               },
-              child: const Text('Добавить задачу'))
+              child: const Text('Добавить задачу',
+                  style: TextStyle(color: Colors.white)))
         ],
       ),
     );
