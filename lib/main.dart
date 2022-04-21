@@ -20,8 +20,8 @@ class TodoApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.cyan),
       // home: TodoListScreen(),
       routes: {
-        'todo_list/': (context) => TodoListScreen(),
-        'todo_list/add_todo': (context) => AddTodoScreen(),
+        'todo_list/': (context) => const TodoListScreen(),
+        'todo_list/add_todo': (context) => const AddTodoScreen(),
       },
       initialRoute: 'todo_list/',
     );

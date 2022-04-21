@@ -14,10 +14,10 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Добавление задачи'),
+        title: const Text('Добавление задачи'),
         centerTitle: true,
       ),
-      body: addTodoProvider(model: _model, child: const _AddTodoForm()),
+      body: AddTodoProvider(model: _model, child: const _AddTodoForm()),
     );
   }
 }
@@ -27,7 +27,7 @@ class _AddTodoForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = addTodoProvider.of(context)?.model;
+    final model = AddTodoProvider.of(context)?.model;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -39,15 +39,15 @@ class _AddTodoForm extends StatelessWidget {
               // model?.save(context);
             },
             onChanged: (value) => model?.nameTask = value,
-            decoration: InputDecoration(hintText: 'Описание задачи'),
+            decoration: const InputDecoration(hintText: 'Описание задачи'),
             autofocus: true,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
               onPressed: () {
                 model?.save(context);
               },
-              child: Text('Добавить задачу'))
+              child: const Text('Добавить задачу'))
         ],
       ),
     );

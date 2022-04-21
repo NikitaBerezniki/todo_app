@@ -6,8 +6,9 @@ class AddTodoModel extends ChangeNotifier {
   String nameTask = '';
   void save(BuildContext context) async {
     if (nameTask == '') return;
-    if (!Hive.isAdapterRegistered(0))
+    if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TodoDataClassAdapter());
+    }
     final Box box = await Hive.openBox<TodoDataClass>('todo');
     final task = TodoDataClass(name: nameTask);
     await box.add(task); // unawaited(box.add(task));
@@ -15,13 +16,13 @@ class AddTodoModel extends ChangeNotifier {
   }
 }
 
-class addTodoProvider extends InheritedNotifier<AddTodoModel> {
+class AddTodoProvider extends InheritedNotifier<AddTodoModel> {
   final AddTodoModel model;
 
-  addTodoProvider({Key? key, required this.model, required Widget child})
+  const AddTodoProvider({Key? key, required this.model, required Widget child})
       : super(key: key, child: child, notifier: model);
 
-  static addTodoProvider? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<addTodoProvider>();
+  static AddTodoProvider? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<AddTodoProvider>();
   }
 }

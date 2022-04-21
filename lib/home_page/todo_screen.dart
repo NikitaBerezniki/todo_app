@@ -19,7 +19,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Список задач'),
+        title: const Text('Список задач'),
         centerTitle: true,
       ),
       body: TodoProvider(model: model, child: const _TodoListWidget()),
@@ -28,7 +28,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
           Navigator.of(context).pushNamed('todo_list/add_todo');
           //,MaterialPageRoute(builder: (context) => AddTodoScreen())
         },
-        child: Icon(Icons.add, color: Colors.white),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -52,20 +52,20 @@ class _TodoListWidget extends StatelessWidget {
                 TodoProvider.of(context)!.model.todoList[index];
             return Slidable(
               endActionPane: ActionPane(
-                motion: ScrollMotion(),
+                motion: const ScrollMotion(),
                 children: [
                   SlidableAction(
                     onPressed: (context) {
                       TodoProvider.of(context)!.model.deleteTodoFromHive(index);
                     },
-                    backgroundColor: Color(0xFFFE4A49),
+                    backgroundColor: const Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
                     icon: Icons.delete,
                     label: 'Delete',
                   ),
                   SlidableAction(
                     onPressed: (context) {},
-                    backgroundColor: Color(0xFF21B7CA),
+                    backgroundColor: const Color(0xFF21B7CA),
                     foregroundColor: Colors.white,
                     icon: Icons.share,
                     label: 'Share',
@@ -76,7 +76,7 @@ class _TodoListWidget extends StatelessWidget {
                   onTap: () {},
                   leading: Text(itemTodo.name),
                   trailing: IconButton(
-                    icon: Icon(Icons.arrow_forward),
+                    icon: const Icon(Icons.arrow_forward),
                     onPressed: () {},
                     splashRadius: 20,
                   )),

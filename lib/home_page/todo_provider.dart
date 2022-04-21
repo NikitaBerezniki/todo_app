@@ -23,8 +23,9 @@ class TodoModel extends ChangeNotifier {
   }
 
   void _setup() async {
-    if (!Hive.isAdapterRegistered(0))
+    if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(TodoDataClassAdapter());
+    }
     final Box<TodoDataClass> box = await Hive.openBox<TodoDataClass>('todo');
 
     _readTodoFromHive(box);
@@ -35,7 +36,7 @@ class TodoModel extends ChangeNotifier {
 class TodoProvider extends InheritedNotifier<TodoModel> {
   final TodoModel model;
 
-  TodoProvider({Key? key, required this.model, required Widget child})
+  const TodoProvider({Key? key, required this.model, required Widget child})
       : super(key: key, child: child, notifier: model);
 
   static TodoProvider? of(BuildContext context) {

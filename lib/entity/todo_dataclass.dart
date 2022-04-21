@@ -9,5 +9,5 @@ class TodoDataClass extends HiveObject{
   TodoDataClass({required this.name});
 
   @override
-  String toString() => '$name';
+  String toString() => name;
 }
