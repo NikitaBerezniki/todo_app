@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Model extends ChangeNotifier {
-  String? nameTask
+  String? nameTask;
   void save() {}
 }
 
