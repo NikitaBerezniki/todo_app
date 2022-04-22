@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app/home_page/todo_provider.dart';
 
-import '../entity/todo_dataclass.dart';
+import '../../entity/group_dataclass.dart';
+import 'group_provider.dart';
 
-class TodoListScreen extends StatefulWidget {
-  const TodoListScreen({
+class GroupListScreen extends StatefulWidget {
+  const GroupListScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<TodoListScreen> createState() => _TodoListScreenState();
+  State<GroupListScreen> createState() => _GroupListScreenState();
 }
 
-class _TodoListScreenState extends State<TodoListScreen> {
-  final model = TodoModel();
+class _GroupListScreenState extends State<GroupListScreen> {
+  final model = GroupModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title:
-            const Text('Список задач', style: TextStyle(color: Colors.white)),
+            const Text('Список групп', style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
-      body: TodoProvider(model: model, child: const _TodoListWidget()),
+      body: GroupProvider(model: model, child: const _TodoListWidget()),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('todo_list/add_todo');
-          //,MaterialPageRoute(builder: (context) => AddTodoScreen())
-        },
+        onPressed: () => model.showAddGroupScreen(context),
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
@@ -40,7 +37,7 @@ class _TodoListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final todoCount = TodoProvider.of(context)?.model.todoList.length ?? 0;
+    final todoCount = GroupProvider.of(context)?.model.groups.length ?? 0;
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: ListView.separated(
@@ -49,15 +46,17 @@ class _TodoListWidget extends StatelessWidget {
           },
           itemCount: todoCount,
           itemBuilder: (BuildContext context, int index) {
-            final TodoDataClass itemTodo =
-                TodoProvider.of(context)!.model.todoList[index];
+            final GroupDataClass itemTodo =
+                GroupProvider.of(context)!.model.groups[index];
             return Slidable(
               endActionPane: ActionPane(
                 motion: const ScrollMotion(),
                 children: [
                   SlidableAction(
                     onPressed: (context) {
-                      TodoProvider.of(context)!.model.deleteTodoFromHive(index);
+                      GroupProvider.of(context)!
+                          .model
+                          .deleteTodoFromHive(index);
                     },
                     backgroundColor: const Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
@@ -67,7 +66,8 @@ class _TodoListWidget extends StatelessWidget {
                 ],
               ),
               child: ListTile(
-                  onTap: () {},
+                  onTap: () => GroupProvider.of(context)!
+                          .model.showTasksList(context, index),
                   leading: Text(itemTodo.name),
                   trailing: IconButton(
                     icon: const Icon(Icons.arrow_forward),

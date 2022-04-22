@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/add_todo_page/add_todo_provider.dart';
 
-class AddTodoScreen extends StatefulWidget {
-  const AddTodoScreen({Key? key}) : super(key: key);
+import 'add_group_provider.dart';
+
+
+class AddGroupScreen extends StatefulWidget {
+  const AddGroupScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddTodoScreen> createState() => _AddTodoScreenState();
+  State<AddGroupScreen> createState() => _AddGroupScreenState();
 }
 
-class _AddTodoScreenState extends State<AddTodoScreen> {
-  final _model = AddTodoModel();
+class _AddGroupScreenState extends State<AddGroupScreen> {
+  final _model = AddGroupModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,17 +20,17 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
             style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
-      body: AddTodoProvider(model: _model, child: const _AddTodoForm()),
+      body: AddGroupProvider(model: _model, child: const _AddGroupForm()),
     );
   }
 }
 
-class _AddTodoForm extends StatelessWidget {
-  const _AddTodoForm({Key? key}) : super(key: key);
+class _AddGroupForm extends StatelessWidget {
+  const _AddGroupForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final model = AddTodoProvider.of(context)?.model;
+    final model = AddGroupProvider.of(context)?.model;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -39,8 +41,8 @@ class _AddTodoForm extends StatelessWidget {
               FocusManager.instance.primaryFocus?.unfocus();
               // model?.save(context);
             },
-            onChanged: (value) => model?.nameTask = value,
-            decoration: const InputDecoration(hintText: 'Описание задачи'),
+            onChanged: (value) => model?.nameGroup = value,
+            decoration: const InputDecoration(hintText: 'Название группы'),
             autofocus: true,
           ),
           const SizedBox(height: 16),
@@ -48,7 +50,7 @@ class _AddTodoForm extends StatelessWidget {
               onPressed: () {
                 model?.save(context);
               },
-              child: const Text('Добавить задачу',
+              child: const Text('Добавить группу',
                   style: TextStyle(color: Colors.white)))
         ],
       ),
