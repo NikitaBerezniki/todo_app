@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-import '../../entity/group_dataclass.dart';
+import '../../entity/group.dart';
 
 
 class AddGroupModel extends ChangeNotifier {
@@ -9,10 +9,10 @@ class AddGroupModel extends ChangeNotifier {
   void save(BuildContext context) async {
     if (nameGroup == '') return;
     if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(GroupDataClassAdapter());
+      Hive.registerAdapter(GroupAdapter());
     }
-    final Box box = await Hive.openBox<GroupDataClass>('group');
-    final group = GroupDataClass(name: nameGroup);
+    final Box box = await Hive.openBox<Group>('group');
+    final group = Group(name: nameGroup);
     await box.add(group); // unawaited(box.add(task));
     Navigator.of(context).pop();
   }

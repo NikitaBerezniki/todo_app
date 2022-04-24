@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
-import '../../entity/group_dataclass.dart';
+import '../../entity/group.dart';
 import 'group_provider.dart';
 
 class GroupListScreen extends StatefulWidget {
@@ -46,7 +45,7 @@ class _TodoListWidget extends StatelessWidget {
           },
           itemCount: todoCount,
           itemBuilder: (BuildContext context, int index) {
-            final GroupDataClass itemTodo =
+            final Group itemTodo =
                 GroupProvider.of(context)!.model.groups[index];
             return Slidable(
               endActionPane: ActionPane(
@@ -56,7 +55,7 @@ class _TodoListWidget extends StatelessWidget {
                     onPressed: (context) {
                       GroupProvider.of(context)!
                           .model
-                          .deleteTodoFromHive(index);
+                          .deleteGroup(index);
                     },
                     backgroundColor: const Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
@@ -67,7 +66,7 @@ class _TodoListWidget extends StatelessWidget {
               ),
               child: ListTile(
                   onTap: () => GroupProvider.of(context)!
-                          .model.showTasksList(context, index),
+                          .model.showTaskList(context, index),
                   leading: Text(itemTodo.name),
                   trailing: IconButton(
                     icon: const Icon(Icons.arrow_forward),

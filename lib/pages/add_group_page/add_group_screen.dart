@@ -16,7 +16,7 @@ class _AddGroupScreenState extends State<AddGroupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Добавление задачи',
+        title: const Text('Добавление группы',
             style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
