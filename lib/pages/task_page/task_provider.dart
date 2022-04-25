@@ -21,6 +21,14 @@ class TaskModel extends ChangeNotifier {
     Navigator.of(context).pushNamed(Routes.add_task, arguments: groupKey);
   }
 
+  void doneToggle(int index) async {
+    final task = group?.tasks?[index];
+    final currentState = task?.isDone ?? false;
+    task?.isDone = !currentState;
+    await task?.save();
+    notifyListeners();
+  }
+
   void _readTaskList() async {
     if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(TaskAdapter());
     await Hive.openBox<Task>('task');

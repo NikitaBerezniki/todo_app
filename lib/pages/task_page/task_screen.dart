@@ -38,7 +38,6 @@ class _TaskListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = TaskProvider.of(context)?.model;
-    // final group = model?.tasks[index];
     final titleGroup = model?.group?.name ?? 'Задача';
     final tasks = model?.tasks;
 
@@ -48,7 +47,11 @@ class _TaskListWidget extends StatelessWidget {
         padding: const EdgeInsets.only(top: 8.0),
         child: ListView.separated(
             itemBuilder: (context, index) {
-
+              final task = TaskProvider.of(context)!.model.tasks[index];
+              final icon = task.isDone ? Icon(Icons.done) : null;
+              final style = task.isDone
+                  ? TextStyle(decoration: TextDecoration.lineThrough)
+                  : null;
               return Slidable(
                   endActionPane: ActionPane(
                     motion: const ScrollMotion(),
@@ -65,8 +68,12 @@ class _TaskListWidget extends StatelessWidget {
                     ],
                   ),
                   child: ListTile(
-                    leading:
-                        Text(tasks?.elementAt(index).name ?? '!!!!!!!!!!!!'),
+                    trailing: icon,
+                    onTap: () => model!.doneToggle(index),
+                    leading: Text(
+                      task.name,
+                      style: style,
+                    ),
                   ));
             },
             separatorBuilder: (context, index) => Divider(),
