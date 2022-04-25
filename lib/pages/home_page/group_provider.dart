@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../constants.dart';
+import '../../main_navigation.dart';
 import '../../entity/group.dart';
 import '../../entity/task.dart';
 
@@ -21,11 +21,11 @@ class GroupModel extends ChangeNotifier {
     final Box<Group> box = await Hive.openBox<Group>('group');
     final int groupKey = box.keyAt(index);
 
-    Navigator.of(context).pushNamed(Routes.task_list, arguments: groupKey);
+    Navigator.of(context).pushNamed(MainNavigationOfRoutes.task_list, arguments: groupKey);
   }
 
   void showAddGroupScreen(BuildContext context) {
-    Navigator.of(context).pushNamed(Routes.add_group);
+    Navigator.of(context).pushNamed(MainNavigationOfRoutes.add_group);
   }
 
   void _readGroup(Box<Group> box) {

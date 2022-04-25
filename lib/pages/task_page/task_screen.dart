@@ -3,28 +3,35 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app/pages/task_page/task_provider.dart';
 
 class TaskScreen extends StatefulWidget {
-  const TaskScreen({Key? key}) : super(key: key);
+  final int groupKey;
+  const TaskScreen({Key? key, required this.groupKey}) : super(key: key);
 
   @override
   State<TaskScreen> createState() => _TaskScreenState();
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  TaskModel? _model;
+  late final TaskListModel _model;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_model == null) {
-      final groupKey = ModalRoute.of(context)?.settings.arguments as int;
-      _model = TaskModel(groupKey: groupKey);
-    }
+  void initState() {
+    super.initState();
+    _model = TaskListModel(groupKey: widget.groupKey);
   }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   if (_model == null) {
+  //     final groupKey = ModalRoute.of(context)?.settings.arguments as int;
+  //     _model = TaskModel(groupKey: groupKey);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return TaskProvider(
-      model: _model!,
+      model: _model,
       child: _TaskListWidget(),
     );
   }
@@ -37,9 +44,9 @@ class _TaskListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = TaskProvider.of(context)?.model;
-    final titleGroup = model?.group?.name ?? 'Задача';
-    final tasks = model?.tasks;
+    final model = TaskProvider.of(context)!.model;
+    final titleGroup = model.group?.name ?? 'Задача';
+    final tasks = model.tasks;
 
     return Scaffold(
       appBar: AppBar(title: Text(titleGroup), centerTitle: true),
@@ -69,7 +76,7 @@ class _TaskListWidget extends StatelessWidget {
                   ),
                   child: ListTile(
                     trailing: icon,
-                    onTap: () => model!.doneToggle(index),
+                    onTap: () => model.doneToggle(index),
                     leading: Text(
                       task.name,
                       style: style,
@@ -77,10 +84,10 @@ class _TaskListWidget extends StatelessWidget {
                   ));
             },
             separatorBuilder: (context, index) => Divider(),
-            itemCount: tasks?.length ?? 0),
+            itemCount: tasks.length),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => model?.showTaskList(context),
+          onPressed: () => model.showTaskList(context),
           child: Icon(Icons.add)),
     );
   }

@@ -13,7 +13,7 @@ class AddGroupModel extends ChangeNotifier {
     }
     final Box box = await Hive.openBox<Group>('group');
     final group = Group(name: nameGroup);
-    await box.add(group); // unawaited(box.add(task));
+    await box.add(group); 
     Navigator.of(context).pop();
   }
 }

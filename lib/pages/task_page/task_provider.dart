@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../constants.dart';
+import '../../main_navigation.dart';
 import '../../entity/group.dart';
 import '../../entity/task.dart';
 
-class TaskModel extends ChangeNotifier {
+class TaskListModel extends ChangeNotifier {
   int groupKey;
   late final Future<Box<Group>> _group_box;
   Group? _group;
   Group? get group => _group;
 
-  TaskModel({required this.groupKey}) {
+  TaskListModel({required this.groupKey}) {
     _setup();
   }
   List<Task> _tasks = <Task>[];
   List<Task> get tasks => _tasks.toList();
 
   void showTaskList(BuildContext context) {
-    Navigator.of(context).pushNamed(Routes.add_task, arguments: groupKey);
+    Navigator.of(context).pushNamed(MainNavigationOfRoutes.add_task, arguments: groupKey);
   }
 
   void doneToggle(int index) async {
@@ -59,8 +59,8 @@ class TaskModel extends ChangeNotifier {
   }
 }
 
-class TaskProvider extends InheritedNotifier<TaskModel> {
-  final TaskModel model;
+class TaskProvider extends InheritedNotifier<TaskListModel> {
+  final TaskListModel model;
 
   TaskProvider({Key? key, required this.model, required Widget child})
       : super(key: key, child: child, notifier: model);

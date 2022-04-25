@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/pages/add_task_page/add_task_provider.dart';
-import 'package:todo_app/pages/task_page/task_provider.dart';
 
 class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+  final int groupKey;
+  const AddTaskScreen({Key? key, required this.groupKey}) : super(key: key);
 
   @override
   State<AddTaskScreen> createState() => _AddTaskScreenState();
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  late AddTaskModel _model;
+  late final AddTaskModel _model;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    // if (_model == null) {
-    final groupKey = ModalRoute.of(context)?.settings.arguments as int;
-    _model = AddTaskModel(groupKey: groupKey);
-    // }
+  void initState() {
+    super.initState();
+    _model = AddTaskModel(groupKey: widget.groupKey);
   }
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+
+  //   if (_model == null) {
+  //     final groupKey = ModalRoute.of(context)?.settings.arguments as int;
+  //     _model = AddTaskModel(groupKey: groupKey);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
