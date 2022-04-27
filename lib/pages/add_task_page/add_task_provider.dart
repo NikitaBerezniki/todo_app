@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:todo_app/box_manager.dart';
 import 'package:todo_app/entity/group.dart';
 import 'package:todo_app/entity/task.dart';
 
 class AddTaskModel extends ChangeNotifier {
   int groupKey;
-  String taskName = '';
+  String taskText = '';
   AddTaskModel({required this.groupKey});
 
   void saveTask(BuildContext context) async {
-    if (taskName == '') return;
-
-    if (!Hive.isAdapterRegistered(0)) Hive.registerAdapter(GroupAdapter());
-    if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(TaskAdapter());
-    final Box<Task> taskBox = await Hive.openBox<Task>('task');
-    final task = Task(name: taskName, isDone: false);
-    await taskBox.add(task);
-
-    final Box<Group> groupBox = await Hive.openBox<Group>('group');
-    final group = groupBox.get(groupKey);
-    group?.addTask(taskBox, task);
-    notifyListeners();
+    if (taskText == '') return;
+    final task = Task(name: taskText, isDone: false);
+    final box = await BoxManager.instance.openTaskBox(groupKey);
+    await box.add(task);
     Navigator.of(context).pop();
+
+    // if (!Hive.isAdapterRegistered(0)) Hive.registerAdapter(GroupAdapter());
+    // if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(TaskAdapter());
+    // final Box<Task> taskBox = await Hive.openBox<Task>('task');
+    // final task = Task(name: taskText, isDone: false);
+    // await taskBox.add(task);
+
+    // final Box<Group> groupBox = await Hive.openBox<Group>('group');
+    // final group = groupBox.get(groupKey);
+    // group?.addTask(taskBox, task);
+    // notifyListeners();
+    // Navigator.of(context).pop();
   }
 }
 

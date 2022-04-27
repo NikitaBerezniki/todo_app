@@ -53,7 +53,7 @@ class AddTaskWidget extends StatelessWidget {
                   minLines: null,
                   maxLines: null,
                   expands: true,
-                  onChanged: (value) => model?.taskName = value,
+                  onChanged: (value) => model?.taskText = value,
                   autofocus: true,
                   decoration: InputDecoration(
                       border: InputBorder.none, hintText: 'Описание задачи')),

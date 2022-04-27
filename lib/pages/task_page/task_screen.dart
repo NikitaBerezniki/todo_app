@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app/pages/task_page/task_provider.dart';
 
-class TaskScreen extends StatefulWidget {
+class TaskScreenConfiguration {
   final int groupKey;
-  const TaskScreen({Key? key, required this.groupKey}) : super(key: key);
+  final String title;
+
+  TaskScreenConfiguration(this.groupKey, this.title);
+}
+
+class TaskScreen extends StatefulWidget {
+  // final int groupKey;
+  final TaskScreenConfiguration configuration;
+  const TaskScreen({Key? key, required this.configuration}) : super(key: key);
 
   @override
   State<TaskScreen> createState() => _TaskScreenState();
@@ -16,7 +24,7 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   void initState() {
     super.initState();
-    _model = TaskListModel(groupKey: widget.groupKey);
+    _model = TaskListModel(configuration: widget.configuration);
   }
 
   // @override
@@ -45,7 +53,8 @@ class _TaskListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = TaskProvider.of(context)!.model;
-    final titleGroup = model.group?.name ?? 'Задача';
+    // final titleGroup = model.group?.name ?? 'Задача';
+    final titleGroup = model.configuration.title;
     final tasks = model.tasks;
 
     return Scaffold(
@@ -87,8 +96,7 @@ class _TaskListWidget extends StatelessWidget {
             itemCount: tasks.length),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => model.showTaskList(context),
-          child: Icon(Icons.add)),
+          onPressed: () => model.showTaskList(context), child: Icon(Icons.add)),
     );
   }
 }

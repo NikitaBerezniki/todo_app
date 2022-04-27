@@ -20,16 +20,15 @@ class MainNavigation {
   };
 
   Route<Object>? onGenerateRoute(RouteSettings settings) {
-    final groupKey = settings.arguments as int;
-
+    final configuration = settings.arguments as TaskScreenConfiguration;
     switch (settings.name) {
       case MainNavigationOfRoutes.task_list:
         return MaterialPageRoute(
-            builder: (context) => TaskScreen(groupKey: groupKey));
+            builder: (context) => TaskScreen(configuration: configuration));
 
       case MainNavigationOfRoutes.add_task:
         return MaterialPageRoute(
-            builder: (context) => AddTaskScreen(groupKey: groupKey));
+            builder: (context) => AddTaskScreen(groupKey: configuration.groupKey));
 
       default:
         return MaterialPageRoute(builder: (context) => Text('data'));
