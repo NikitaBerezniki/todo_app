@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:todo_app/box_manager.dart';
-import 'package:todo_app/entity/group.dart';
 import 'package:todo_app/entity/task.dart';
 
 class AddTaskModel extends ChangeNotifier {
@@ -14,6 +12,7 @@ class AddTaskModel extends ChangeNotifier {
     final task = Task(name: taskText, isDone: false);
     final box = await BoxManager.instance.openTaskBox(groupKey);
     await box.add(task);
+    // await BoxManager.instance.closeBox(box);
     Navigator.of(context).pop();
 
     // if (!Hive.isAdapterRegistered(0)) Hive.registerAdapter(GroupAdapter());

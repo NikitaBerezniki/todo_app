@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/box_manager.dart';
@@ -7,20 +8,23 @@ import '../../entity/group.dart';
 
 class GroupModel extends ChangeNotifier {
   late final Future<Box<Group>> _box;
+
+  ValueListenable<Object>? _listenableBox;
+
   List<Group> _groups = <Group>[];
+
+  List<Group> get groups => _groups.toList();
 
   GroupModel() {
     _setup();
   }
 
-  List<Group> get groups => _groups.toList();
-
   void showTaskList(BuildContext context, int index) async {
     final group = (await _box).getAt(index);
     if (group != null) {
       final configuration = TaskScreenConfiguration(group.key, group.name);
-      Navigator.of(context)
-          .pushNamed(MainNavigationOfRoutes.task_list, arguments: configuration);
+      Navigator.of(context).pushNamed(MainNavigationOfRoutes.task_list,
+          arguments: configuration);
     }
   }
 
@@ -38,15 +42,21 @@ class GroupModel extends ChangeNotifier {
     final int groupKey = (await _box).keyAt(index);
     final taskBoxName = BoxManager.instance.makeTaskBoxName(groupKey);
     Hive.deleteBoxFromDisk(taskBoxName);
-    // await box.getAt(index)?.tasks?.deleteAllFromHive();
     await box.deleteAt(index);
   }
 
-  void _setup() async {
-    // await BoxManager.instance.openTaskBox();
+  Future<void> _setup() async {
     _box = BoxManager.instance.openGroupBox();
     await _readGroup();
-    (await _box).listenable().addListener(_readGroup);
+    _listenableBox = (await _box).listenable();
+    _listenableBox?.addListener(_readGroup);
+  }
+
+  @override
+  Future<void> dispose() async {
+    _listenableBox?.removeListener(_readGroup);
+    await BoxManager.instance.closeBox(await _box);
+    super.dispose();
   }
 }
 

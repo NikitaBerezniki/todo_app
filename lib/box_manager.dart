@@ -1,11 +1,11 @@
 import 'package:hive/hive.dart';
-import 'package:flutter/material.dart';
 
 import 'entity/group.dart';
 import 'entity/task.dart';
 
 class BoxManager {
   static final BoxManager instance = BoxManager._();
+  final Map<String, int> _boxCounter = <String, int>{};
   // шаблон Singleton
   // чтобы никто не смог создать экземпляр класса.
   // это приватный конструктор
@@ -27,7 +27,10 @@ class BoxManager {
   }
 
   Future<Box<T>> _openBox<T>(
-      String name, int typeId, TypeAdapter<T> adapter) async {
+    String name,
+    int typeId,
+    TypeAdapter<T> adapter,
+  ) async {
     if (!Hive.isAdapterRegistered(typeId)) {
       Hive.registerAdapter(adapter);
     }

@@ -10,7 +10,6 @@ class TaskScreenConfiguration {
 }
 
 class TaskScreen extends StatefulWidget {
-  // final int groupKey;
   final TaskScreenConfiguration configuration;
   const TaskScreen({Key? key, required this.configuration}) : super(key: key);
 
@@ -25,6 +24,12 @@ class _TaskScreenState extends State<TaskScreen> {
   void initState() {
     super.initState();
     _model = TaskListModel(configuration: widget.configuration);
+  }
+
+  @override
+  void dispose() async {
+    // await _model.dispose();
+    super.dispose();
   }
 
   // @override
@@ -53,7 +58,6 @@ class _TaskListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = TaskProvider.of(context)!.model;
-    // final titleGroup = model.group?.name ?? 'Задача';
     final titleGroup = model.configuration.title;
     final tasks = model.tasks;
 

@@ -13,7 +13,13 @@ class GroupListScreen extends StatefulWidget {
 }
 
 class _GroupListScreenState extends State<GroupListScreen> {
-  final model = GroupModel();
+  @override
+  void dispose() async {
+    await _model.dispose();
+    super.dispose();
+  }
+
+  final _model = GroupModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +28,9 @@ class _GroupListScreenState extends State<GroupListScreen> {
             const Text('Список групп', style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
-      body: GroupProvider(model: model, child: const _TodoListWidget()),
+      body: GroupProvider(model: _model, child: const _TodoListWidget()),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => model.showAddGroupScreen(context),
+        onPressed: () => _model.showAddGroupScreen(context),
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
@@ -53,9 +59,7 @@ class _TodoListWidget extends StatelessWidget {
                 children: [
                   SlidableAction(
                     onPressed: (context) {
-                      GroupProvider.of(context)!
-                          .model
-                          .deleteGroup(index);
+                      GroupProvider.of(context)!.model.deleteGroup(index);
                     },
                     backgroundColor: const Color(0xFFFE4A49),
                     foregroundColor: Colors.white,
@@ -66,7 +70,8 @@ class _TodoListWidget extends StatelessWidget {
               ),
               child: ListTile(
                   onTap: () => GroupProvider.of(context)!
-                          .model.showTaskList(context, index),
+                      .model
+                      .showTaskList(context, index),
                   leading: Text(itemTodo.name),
                   trailing: IconButton(
                     icon: const Icon(Icons.arrow_forward),

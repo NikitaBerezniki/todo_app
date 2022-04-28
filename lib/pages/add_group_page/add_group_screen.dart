@@ -39,7 +39,6 @@ class _AddGroupForm extends StatelessWidget {
           TextField(
             onEditingComplete: () {
               FocusManager.instance.primaryFocus?.unfocus();
-              // model?.save(context);
             },
             onChanged: (value) => model?.nameGroup = value,
             decoration: const InputDecoration(hintText: 'Название группы'),
@@ -48,7 +47,7 @@ class _AddGroupForm extends StatelessWidget {
           const SizedBox(height: 16),
           ElevatedButton(
               onPressed: () {
-                model?.save(context);
+                model?.saveGroup(context);
               },
               child: const Text('Добавить группу',
                   style: TextStyle(color: Colors.white)))
