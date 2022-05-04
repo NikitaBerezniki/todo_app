@@ -33,7 +33,7 @@ class TaskListModel extends ChangeNotifier {
     @override
   Future<void> dispose() async {
     _listenableBox?.removeListener(_readTaskList);
-    await BoxManager.instance.closeBox(await _box);
+    // await BoxManager.instance.closeBox(await _box);
     super.dispose();
   }
 
