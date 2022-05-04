@@ -4,10 +4,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_app/box_manager.dart';
 import '../../main_navigation.dart';
 import '../../entity/task.dart';
-import 'task_screen.dart';
+import 'task_list_screen.dart';
 
 class TaskListModel extends ChangeNotifier {
-  TaskScreenConfiguration configuration;
+  TaskListScreenConfiguration configuration;
   ValueListenable<Object>? _listenableBox;
 
   late final Future<Box<Task>> _box;
@@ -30,6 +30,13 @@ class TaskListModel extends ChangeNotifier {
     _listenableBox?.addListener(_readTaskList);
   }
 
+    @override
+  Future<void> dispose() async {
+    _listenableBox?.removeListener(_readTaskList);
+    await BoxManager.instance.closeBox(await _box);
+    super.dispose();
+  }
+
   Future<void> doneToggle(int index) async {
     final task = (await _box).getAt(index);
     task?.isDone = !task.isDone;
@@ -45,12 +52,7 @@ class TaskListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  @override
-  Future<void> dispose() async {
-    _listenableBox?.removeListener(_readTaskList);
-    await BoxManager.instance.closeBox(await _box);
-    super.dispose();
-  }
+
 }
 
 class TaskProvider extends InheritedNotifier<TaskListModel> {

@@ -41,8 +41,9 @@ class _AddGroupForm extends StatelessWidget {
               FocusManager.instance.primaryFocus?.unfocus();
             },
             onChanged: (value) => model?.nameGroup = value,
-            decoration: const InputDecoration(hintText: 'Название группы'),
+            decoration: InputDecoration(hintText: 'Название группы', errorText: model?.errorText),
             autofocus: true,
+            
           ),
           const SizedBox(height: 16),
           ElevatedButton(

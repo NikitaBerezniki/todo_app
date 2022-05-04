@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app/pages/task_page/task_provider.dart';
+import 'package:todo_app/pages/task_page/task__list_provider.dart';
 
-class TaskScreenConfiguration {
+class TaskListScreenConfiguration {
   final int groupKey;
   final String title;
 
-  TaskScreenConfiguration(this.groupKey, this.title);
+  TaskListScreenConfiguration(this.groupKey, this.title);
 }
 
-class TaskScreen extends StatefulWidget {
-  final TaskScreenConfiguration configuration;
-  const TaskScreen({Key? key, required this.configuration}) : super(key: key);
+class TaskListScreen extends StatefulWidget {
+  final TaskListScreenConfiguration configuration;
+  const TaskListScreen({Key? key, required this.configuration}) : super(key: key);
 
   @override
-  State<TaskScreen> createState() => _TaskScreenState();
+  State<TaskListScreen> createState() => _TaskListScreenState();
 }
 
-class _TaskScreenState extends State<TaskScreen> {
+class _TaskListScreenState extends State<TaskListScreen> {
   late final TaskListModel _model;
 
   @override
@@ -27,8 +27,9 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   @override
-  void dispose() async {
-    // await _model.dispose();
+  Future<void>  dispose() async {
+    // убрал await!
+    _model.dispose();
     super.dispose();
   }
 

@@ -14,16 +14,21 @@ class BoxManager {
   String makeTaskBoxName(int groupKey) => 'task_box_$groupKey';
 
   Future<Box<Group>> openGroupBox() async {
+    print('Открываем бокс с группой');
     return _openBox('group', 0, GroupAdapter());
   }
 
   Future<Box<Task>> openTaskBox(int groupKey) async {
+    print('Открываем бокс task_box_$groupKey');
     return _openBox(makeTaskBoxName(groupKey), 1, TaskAdapter());
   }
 
   Future<void> closeBox<T>(Box<T> box) async {
-    await box.compact();
-    await box.close();
+    if (await box.isOpen) {
+      print('Бокс ${box.name} закрываем ');
+      await box.compact();
+      await box.close();
+    }
   }
 
   Future<Box<T>> _openBox<T>(

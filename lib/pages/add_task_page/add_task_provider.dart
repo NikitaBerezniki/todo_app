@@ -4,15 +4,26 @@ import 'package:todo_app/entity/task.dart';
 
 class AddTaskModel extends ChangeNotifier {
   int groupKey;
-  String taskText = '';
+  String _taskText = '';
+  bool get isValidTaskText => _taskText.trim().isNotEmpty;
+  set taskText(String value) {
+    final isTaskTextEmpty = _taskText.trim().isEmpty;
+    _taskText = value;
+    if (value.trim().isEmpty != isTaskTextEmpty) {
+      notifyListeners();
+    }
+  }
+
   AddTaskModel({required this.groupKey});
 
   void saveTask(BuildContext context) async {
-    if (taskText == '') return;
+    final taskText = _taskText.trim();
+    if (taskText.isEmpty) return;
+
     final task = Task(name: taskText, isDone: false);
     final box = await BoxManager.instance.openTaskBox(groupKey);
     await box.add(task);
-    // await BoxManager.instance.closeBox(box);
+    await BoxManager.instance.closeBox(box); // Работает!!!
     Navigator.of(context).pop();
 
     // if (!Hive.isAdapterRegistered(0)) Hive.registerAdapter(GroupAdapter());

@@ -17,6 +17,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     super.initState();
     _model = AddTaskModel(groupKey: widget.groupKey);
   }
+
   // @override
   // void didChangeDependencies() {
   //   super.didChangeDependencies();
@@ -56,11 +57,12 @@ class AddTaskWidget extends StatelessWidget {
                   onChanged: (value) => model?.taskText = value,
                   autofocus: true,
                   decoration: InputDecoration(
-                      border: InputBorder.none, hintText: 'Описание задачи')),
+                      border: InputBorder.none,
+                      hintText: 'Описание задачи')),
             ),
             SizedBox(height: 16),
             ElevatedButton(
-                onPressed: () => model?.saveTask(context),
+                onPressed: model?.isValidTaskText == true ? () => model?.saveTask(context): null,
                 child: Text('Добавить задачу'))
           ],
         ),

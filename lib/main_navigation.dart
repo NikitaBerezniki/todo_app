@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/add_group_page/add_group_screen.dart';
 import 'pages/add_task_page/add_task_screen.dart';
 import 'pages/home_page/group_screen.dart';
-import 'pages/task_page/task_screen.dart';
+import 'pages/task_page/task_list_screen.dart';
 
 abstract class MainNavigationOfRoutes {
   static const String group_list = 'group_list/';
@@ -20,11 +20,11 @@ class MainNavigation {
   };
 
   Route<Object>? onGenerateRoute(RouteSettings settings) {
-    final configuration = settings.arguments as TaskScreenConfiguration;
+    final configuration = settings.arguments as TaskListScreenConfiguration;
     switch (settings.name) {
       case MainNavigationOfRoutes.task_list:
         return MaterialPageRoute(
-            builder: (context) => TaskScreen(configuration: configuration));
+            builder: (context) => TaskListScreen(configuration: configuration));
 
       case MainNavigationOfRoutes.add_task:
         return MaterialPageRoute(
